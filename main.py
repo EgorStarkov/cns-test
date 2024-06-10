@@ -68,7 +68,7 @@ def run_selenium_test():
             
             time.sleep(random.uniform(1, 3))
         except Exception as error:
-            print("Тест провален с неизвестной ошибкой (скорее всего это не из-за корзины), id: " + thread_id, error)
+            print("Тест провален с неизвестной ошибкой (скорее всего это не из-за корзины), id: " + thread_id)
             print("Кол-во ошибок связанных с корзиной: " + errors_count)
 
         finally:
@@ -76,7 +76,7 @@ def run_selenium_test():
         
 
 def run_tests_on_process():
-    num_threads = 15  # Maximum number of threads per process
+    num_threads = 25  # Maximum number of threads per process
     count_proc = 0
     proc_id = str(round(random.uniform(10000, 100000)))
 
