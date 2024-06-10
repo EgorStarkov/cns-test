@@ -53,7 +53,7 @@ def run_selenium_test():
 
 
             # Ожидание, чтобы товар добавился в корзину
-            time.sleep(random.uniform(6, 8))
+            time.sleep(random.uniform(15, 20))
 
             # Переход в корзину
             try:
