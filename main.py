@@ -81,12 +81,25 @@ def run_selenium_test():
         
 
 def run_tests_on_process():
-    num_threads = 35  # Максимальное количество потоков на процесс
+    num_threads = 35  # Maximum number of threads per process
+    count_proc = 0
+    proc_id = str(round(random.uniform(10000, 100000)))
 
     with ThreadPoolExecutor(max_workers=num_threads) as executor:
+        futures = []
         while True:
-            time.sleep(2)
-            executor.submit(run_selenium_test)
+            if len(futures) < num_threads:
+                future = executor.submit(run_selenium_test)
+                futures.append(future)
+                
+                count_proc += 1
+                print("Процесс : " + proc_id + " : " + str(count_proc))
+            else:
+                # Remove completed futures from the list
+                futures = [f for f in futures if not f.done()]
+            
+            # Sleep to avoid rapid looping
+            time.sleep(2)  # Adjust the sleep duration as needed
 
 if __name__ == "__main__":
     kill_all_processes()
