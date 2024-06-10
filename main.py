@@ -40,24 +40,7 @@ def run_selenium_test():
         try:
             print("Запуск потока, id: " + thread_id)
             # Переход на сайт
-            driver.get("https://cnsbrand.ru")
-
-            # Ожидание полной загрузки страницы
-            time.sleep(random.uniform(1, 2))
-
-            # Переход в каталог (например, выбираем первый каталог в меню)
-            divider = driver.find_element(By.CSS_SELECTOR, ".btn-menu")
-            divider.click()
-            time.sleep(random.uniform(1, 2))
-            catalog_link = driver.find_element(By.CSS_SELECTOR, "#ul_catalog_menu_XEVOpk > li:nth-child(2) > a:nth-child(1)")
-            catalog_link.click()
-
-            # Ожидание загрузки страницы каталога
-            time.sleep(random.uniform(1, 3))
-
-            # Выбор товара в каталоге
-            product_link = driver.find_element(By.CSS_SELECTOR, "a[href*='/catalog/sumki_cherez_plecho/sumka_bianca_mini_canvas_sandy_siena/']")
-            product_link.click()
+            driver.get("https://cnsbrand.ru/catalog/mone/ryukzak_mone_coal/")
 
             # Ожидание загрузки страницы товара
             time.sleep(random.uniform(1, 3))
