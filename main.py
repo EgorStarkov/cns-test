@@ -15,7 +15,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import signal
 
-errors_count = 0
 
 def kill_all_processes():
     current_proc = psutil.Process()
@@ -82,16 +81,16 @@ def run_selenium_test():
         
 
 def run_tests_on_process():
-    num_threads = 30  # Максимальное количество потоков на процесс
+    num_threads = 35  # Максимальное количество потоков на процесс
 
     with ThreadPoolExecutor(max_workers=num_threads) as executor:
         while True:
-            time.sleep(3)
+            time.sleep(2)
             executor.submit(run_selenium_test)
 
 if __name__ == "__main__":
     kill_all_processes()
-    num_threads = 5  # Максимальное количество процессов
+    num_threads = 15  # Максимальное количество процессов
 
     with ProcessPoolExecutor(max_workers=num_threads) as executor:
         for _ in range(num_threads):
