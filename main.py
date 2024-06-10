@@ -15,6 +15,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import signal
 
+errors_count = 0
+
 def kill_all_processes():
     current_proc = psutil.Process()
     for proc in psutil.process_iter():
@@ -65,6 +67,7 @@ def run_selenium_test():
                 add_to_cart_button.click()
             except:
                 print("Ошибка, связанная с нажатием кнопки 'добавить корзину' НЕ В попапе, id: " + thread_id)
+                print("Кол-во ошибок связанных с корзиной: " + errors_count)
 
 
             # Ожидание, чтобы товар добавился в корзину
@@ -76,24 +79,27 @@ def run_selenium_test():
                 cart_button.click()
             except:
                 print("Ошибка, связанная с нажатием кнопки 'добавить корзину' В попапе, id: " + thread_id)
+                print("Кол-во ошибок связанных с корзиной: " + errors_count)
 
             # Явное ожидание загрузки страницы корзины
             try:
                 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".basket-page")))
                 print("Страница корзины загружена успешно, id: " + thread_id)
             except TimeoutException:
-                print("Время ожидания истекло, страница корзины не загружена, id: " + thread_id)
-
+                print("Время ожидания истекло, страница корзины НЕ загружена, id: " + thread_id)
+                errors_count = errors_count + 1
+            
             time.sleep(random.uniform(1, 3))
         except Exception as error:
             print("Тест провален с неизвестной ошибкой (скорее всего это не из-за корзины), id: " + thread_id, error)
+            print("Кол-во ошибок связанных с корзиной: " + errors_count)
 
         finally:
             driver.quit()
         
 
 def run_tests_on_process():
-    num_threads = 3  # Максимальное количество потоков на процесс
+    num_threads = 30  # Максимальное количество потоков на процесс
 
     with ThreadPoolExecutor(max_workers=num_threads) as executor:
         while True:
@@ -102,7 +108,7 @@ def run_tests_on_process():
 
 if __name__ == "__main__":
     kill_all_processes()
-    num_threads = 1  # Максимальное количество процессов
+    num_threads = 5  # Максимальное количество процессов
 
     with ProcessPoolExecutor(max_workers=num_threads) as executor:
         for _ in range(num_threads):
