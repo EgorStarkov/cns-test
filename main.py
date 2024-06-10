@@ -56,12 +56,7 @@ def run_selenium_test():
             time.sleep(random.uniform(15, 20))
 
             # Переход в корзину
-            try:
-                cart_button = driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div[2]/div[2]/a")
-                cart_button.click()
-            except:
-                print("Ошибка, связанная с нажатием кнопки 'добавить корзину' В попапе, id: " + thread_id)
-                print("Кол-во ошибок связанных с корзиной: " + errors_count)
+            driver.get("https://cnsbrand.ru/cart/")
 
             # Явное ожидание загрузки страницы корзины
             try:
@@ -103,7 +98,7 @@ def run_tests_on_process():
 
 if __name__ == "__main__":
     kill_all_processes()
-    num_threads = 15  # Максимальное количество процессов
+    num_threads = 14  # Максимальное количество процессов
 
     with ProcessPoolExecutor(max_workers=num_threads) as executor:
         for _ in range(num_threads):
