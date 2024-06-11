@@ -77,7 +77,7 @@ def run_selenium_test(items_hrefs):
         
 
 def run_tests_on_process(items_hrefs):
-    num_threads = 2  # Maximum number of threads per process
+    num_threads = 20  # Maximum number of threads per process
     count_proc = 0
     proc_id = str(round(random.uniform(10000, 100000)))
 
@@ -99,7 +99,7 @@ def run_tests_on_process(items_hrefs):
 
 if __name__ == "__main__":
     kill_all_processes()
-    num_threads = 1  # Максимальное количество процессов
+    num_threads = 9  # Максимальное количество процессов
 
     with ProcessPoolExecutor(max_workers=num_threads) as executor:
         for _ in range(num_threads):
