@@ -43,14 +43,14 @@ def run_selenium_test(items_hrefs):
             driver.get(random.choice(items_hrefs))
 
             # Ожидание загрузки страницы товара
-            time.sleep(random.uniform(1, 2))
             try:
                 # Нажатие на кнопку "Добавить в корзину"
                 add_to_cart_button = driver.find_element(By.CSS_SELECTOR, '[link="basket-modal"]')
                 add_to_cart_button.click()
             except:
                 print("Ошибка, связанная с нажатием кнопки 'добавить корзину' НЕ В попапе, id: " + thread_id)
-                print("Кол-во ошибок связанных с корзиной: " + errors_count)
+                driver.quit()
+                return
 
 
             # Ожидание, чтобы товар добавился в корзину
@@ -61,11 +61,12 @@ def run_selenium_test(items_hrefs):
 
             # Явное ожидание загрузки страницы корзины
             try:
-                WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".basket-items-list-item-container")))
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".basket-items-list-item-container")))
                 print("Страница корзины загружена успешно, id: " + thread_id)
             except TimeoutException:
                 print("Время ожидания истекло, страница корзины НЕ загружена, id: " + thread_id)
-                errors_count = errors_count + 1
+                driver.quit()
+                return
 
         except Exception as error:
             print("Ошибка, id: " + thread_id)
@@ -75,7 +76,7 @@ def run_selenium_test(items_hrefs):
         
 
 def run_tests_on_process(items_hrefs):
-    num_threads = 10  # Maximum number of threads per process
+    num_threads = 12  # Maximum number of threads per process
     count_proc = 0
     proc_id = str(round(random.uniform(10000, 100000)))
 
@@ -93,7 +94,7 @@ def run_tests_on_process(items_hrefs):
                 futures = [f for f in futures if not f.done()]
             
             # Sleep to avoid rapid looping
-            time.sleep(random.uniform(1, 10))  # Adjust the sleep duration as needed
+            time.sleep(random.uniform(1, 5))  # Adjust the sleep duration as needed
 
 if __name__ == "__main__":
     kill_all_processes()
