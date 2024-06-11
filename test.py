@@ -39,14 +39,7 @@ def run_selenium_test():
         try:
             print("Запуск потока, id: " + thread_id)
             # Переход на сайт
-            driver.get("https://cnsbrand.ru/catalog/")
-
-            # Ожидание загрузки страницы товара
-            for i in range(11):
-                time.sleep(3)
-                print("scroll")
-
-                driver. execute_script("window. scrollBy(0, 2000)")
+            driver.get("https://cnsbrand.ru/catalog/?page=50")
 
             # Определите CSS селекторы
             outer_selector = '.catalog-item'
@@ -64,6 +57,7 @@ def run_selenium_test():
                     hrefs.append(href)
 
             print(hrefs)
+            print(len(hrefs))
     
         finally:
             driver.quit()
