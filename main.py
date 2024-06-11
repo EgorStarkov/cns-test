@@ -46,7 +46,7 @@ def run_selenium_test(items_hrefs):
             time.sleep(random.uniform(7, 10))
             try:
                 # Нажатие на кнопку "Добавить в корзину"
-                add_to_cart_button = driver.find_element(By.XPATH, "/html/body/div[2]/div[1]/div[2]/div[2]/div[5]/a")
+                add_to_cart_button = driver.find_element(By.CSS_SELECTOR, '[link="basket-modal"]')
                 add_to_cart_button.click()
             except:
                 print("Ошибка, связанная с нажатием кнопки 'добавить корзину' НЕ В попапе, id: " + thread_id)
@@ -69,8 +69,7 @@ def run_selenium_test(items_hrefs):
             
             time.sleep(random.uniform(1, 3))
         except Exception as error:
-            print("Тест провален с неизвестной ошибкой (скорее всего это не из-за корзины), id: " + thread_id)
-            print("Кол-во ошибок связанных с корзиной: " + errors_count)
+            print("Ошибка, id: " + thread_id)
 
         finally:
             driver.quit()
