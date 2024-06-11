@@ -43,7 +43,7 @@ def run_selenium_test(items_hrefs):
             driver.get(random.choice(items_hrefs))
 
             # Ожидание загрузки страницы товара
-            time.sleep(random.uniform(7, 10))
+            time.sleep(random.uniform(1, 2))
             try:
                 # Нажатие на кнопку "Добавить в корзину"
                 add_to_cart_button = driver.find_element(By.CSS_SELECTOR, '[link="basket-modal"]')
@@ -61,13 +61,12 @@ def run_selenium_test(items_hrefs):
 
             # Явное ожидание загрузки страницы корзины
             try:
-                WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".basket-items-list-item-container")))
+                WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".basket-items-list-item-container")))
                 print("Страница корзины загружена успешно, id: " + thread_id)
             except TimeoutException:
                 print("Время ожидания истекло, страница корзины НЕ загружена, id: " + thread_id)
                 errors_count = errors_count + 1
-            
-            time.sleep(random.uniform(1, 3))
+
         except Exception as error:
             print("Ошибка, id: " + thread_id)
 
@@ -76,7 +75,7 @@ def run_selenium_test(items_hrefs):
         
 
 def run_tests_on_process(items_hrefs):
-    num_threads = 13  # Maximum number of threads per process
+    num_threads = 10  # Maximum number of threads per process
     count_proc = 0
     proc_id = str(round(random.uniform(10000, 100000)))
 
@@ -94,12 +93,13 @@ def run_tests_on_process(items_hrefs):
                 futures = [f for f in futures if not f.done()]
             
             # Sleep to avoid rapid looping
-            time.sleep(2)  # Adjust the sleep duration as needed
+            time.sleep(random.uniform(1, 10))  # Adjust the sleep duration as needed
 
 if __name__ == "__main__":
     kill_all_processes()
-    num_threads = 9  # Максимальное количество процессов
+    num_threads = 24  # Максимальное количество процессов
 
     with ProcessPoolExecutor(max_workers=num_threads) as executor:
         for _ in range(num_threads):
             executor.submit(run_tests_on_process, items_hrefs)
+            time.sleep(20) 
