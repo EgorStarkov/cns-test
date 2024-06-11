@@ -54,7 +54,7 @@ def run_selenium_test(items_hrefs):
 
 
             # Ожидание, чтобы товар добавился в корзину
-            time.sleep(random.uniform(5, 10))
+            time.sleep(random.uniform(3, 8))
 
             # Переход в корзину
             driver.get("https://cnsbrand.ru/cart/")
@@ -76,7 +76,7 @@ def run_selenium_test(items_hrefs):
         
 
 def run_tests_on_process(items_hrefs):
-    num_threads = 12  # Maximum number of threads per process
+    num_threads = 8  # Maximum number of threads per process
     count_proc = 0
     proc_id = str(round(random.uniform(10000, 100000)))
 
@@ -94,7 +94,7 @@ def run_tests_on_process(items_hrefs):
                 futures = [f for f in futures if not f.done()]
             
             # Sleep to avoid rapid looping
-            time.sleep(random.uniform(1, 5))  # Adjust the sleep duration as needed
+            time.sleep(1)  # Adjust the sleep duration as needed
 
 if __name__ == "__main__":
     kill_all_processes()
@@ -103,4 +103,4 @@ if __name__ == "__main__":
     with ProcessPoolExecutor(max_workers=num_threads) as executor:
         for _ in range(num_threads):
             executor.submit(run_tests_on_process, items_hrefs)
-            time.sleep(20) 
+            time.sleep(5) 
