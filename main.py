@@ -61,7 +61,7 @@ def run_selenium_test(items_hrefs):
 
             # Явное ожидание загрузки страницы корзины
             try:
-                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".basket-page")))
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".basket-items-list-item-container")))
                 print("Страница корзины загружена успешно, id: " + thread_id)
             except TimeoutException:
                 print("Время ожидания истекло, страница корзины НЕ загружена, id: " + thread_id)
