@@ -43,7 +43,7 @@ def run_selenium_test(items_hrefs):
             driver.get(random.choice(items_hrefs))
 
             # Ожидание загрузки страницы товара
-            time.sleep(random.uniform(1, 3))
+            time.sleep(random.uniform(7, 10))
             try:
                 # Нажатие на кнопку "Добавить в корзину"
                 add_to_cart_button = driver.find_element(By.XPATH, "/html/body/div[2]/div[1]/div[2]/div[2]/div[5]/a")
@@ -61,7 +61,7 @@ def run_selenium_test(items_hrefs):
 
             # Явное ожидание загрузки страницы корзины
             try:
-                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".basket-items-list-item-container")))
+                WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".basket-items-list-item-container")))
                 print("Страница корзины загружена успешно, id: " + thread_id)
             except TimeoutException:
                 print("Время ожидания истекло, страница корзины НЕ загружена, id: " + thread_id)
@@ -77,7 +77,7 @@ def run_selenium_test(items_hrefs):
         
 
 def run_tests_on_process(items_hrefs):
-    num_threads = 16  # Maximum number of threads per process
+    num_threads = 13  # Maximum number of threads per process
     count_proc = 0
     proc_id = str(round(random.uniform(10000, 100000)))
 
