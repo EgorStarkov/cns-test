@@ -39,8 +39,9 @@ def run_selenium_test(items_hrefs):
     with webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options) as driver:
         try:
             print("Запуск потока, id: " + thread_id)
+            url = random.choice(items_hrefs)
             # Переход на сайт
-            driver.get(random.choice(items_hrefs))
+            driver.get(url)
 
             # Ожидание загрузки страницы товара
             try:
@@ -48,7 +49,7 @@ def run_selenium_test(items_hrefs):
                 add_to_cart_button = driver.find_element(By.CSS_SELECTOR, '[link="basket-modal"]')
                 add_to_cart_button.click()
             except:
-                print("Ошибка, связанная с нажатием кнопки 'добавить корзину' НЕ В попапе, id: " + thread_id)
+                print("Ошибка, связанная с нажатием кнопки 'добавить корзину' НЕ В попапе, id: " + thread_id + " : " + url)
                 driver.quit()
                 return
 
